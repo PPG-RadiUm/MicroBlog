@@ -15,4 +15,11 @@ public class GreetingController {
         return new Greeting("Hello, " + message.getName() + "!");
     }
 
+    /*@MessageMapping("/blog")
+    @SendTo("/topic/greetings")
+    public Greeting greeting(Message message) throws Exception {
+        //request.getSession().setAttribute("testVariable", "Test Values!!");
+        //Thread.sleep(1000); // simulated delay
+        return new Greeting("Hello, " + message.getName() + "!");
+    }*/
 }

@@ -12,6 +12,7 @@ public class User {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     private String userName;
+    private String password;
     private String facebookId;
     private String twitterId;
     private String linkedInId;
@@ -19,8 +20,9 @@ public class User {
 
     protected User() {}
 
-    public User(String userName, String facebookId, String twitterId, String linkedInId, String picture) {
+    public User(String userName, String password, String facebookId, String twitterId, String linkedInId, String picture) {
         this.userName = userName;
+        this.password = password;
         this.facebookId = facebookId;
         this.twitterId = twitterId;
         this.linkedInId = linkedInId;
@@ -60,6 +62,7 @@ public class User {
 
     public User updateUser(String userName, String facebookId, String twitterId, String linkedInId, String picture){
         this.userName = userName;
+        this.password = password;
         this.facebookId = facebookId;
         this.twitterId = twitterId;
         this.linkedInId = linkedInId;

@@ -44,6 +44,10 @@ public class User {
         return userName;
     }
 
+    public String getPassword(){
+        return password;
+    }
+
     public String getFacebookId(){
         return facebookId;
     }
@@ -60,7 +64,7 @@ public class User {
         return picture;
     }
 
-    public User updateUser(String userName, String facebookId, String twitterId, String linkedInId, String picture){
+    public User updateUser(String userName, String password, String facebookId, String twitterId, String linkedInId, String picture){
         this.userName = userName;
         this.password = password;
         this.facebookId = facebookId;

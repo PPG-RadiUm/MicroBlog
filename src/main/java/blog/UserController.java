@@ -32,12 +32,12 @@ public class UserController {
 
     @RequestMapping(value="/", method = RequestMethod.POST)
     public User saveUser(@RequestBody User c){
-        return repository.save(new User(c.getUserName(), c.getFacebookId(), c.getTwitterId(), c.getLinkedInId(), c.getPicture()));
+        return repository.save(new User(c.getUserName(), c.getPassword(), c.getFacebookId(), c.getTwitterId(), c.getLinkedInId(), c.getPicture()));
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
     public User updateUser(@RequestBody User c, @PathVariable("id") Long id) {
         User cTemp = repository.findOne(id);
-        return repository.save(cTemp.updateUser(c.getUserName(), c.getFacebookId(), c.getTwitterId(), c.getLinkedInId(), c.getPicture()));
+        return repository.save(cTemp.updateUser(c.getUserName(), c.getPassword(), c.getFacebookId(), c.getTwitterId(), c.getLinkedInId(), c.getPicture()));
     }
 }

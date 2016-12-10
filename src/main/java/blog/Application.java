@@ -21,7 +21,7 @@ public class Application {
 	public CommandLineRunner demo(UserRepository repository) {
 		return (args) -> {
 			// save a couple of customers
-			repository.save(new User("Henry Michel", "Henry-Michel", "HenryMichel", "", ""));
+			repository.save(new User("Henry Michel", "RD", "Henry-Michel", "HenryMichel", "", ""));
 
 			// fetch all customers
 			log.info("Users found with findAll():");

@@ -1,7 +1,10 @@
 package blog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.List;
+import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/user")
 public class UserController {
+
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserRepository repository;
 
@@ -28,6 +35,20 @@ public class UserController {
         }else{
             return repository.findAll();
         }
+    }
+
+    @RequestMapping(value = "/connect", method=RequestMethod.POST)
+    public String getUserByUserNameAndPassword(@ModelAttribute User user) {
+        log.info("Coucou");
+        User usr = repository.findByUserNameAndPassword(user.getUserName(), user.getPassword());
+        if(usr != null){
+            // model.addAttribute("username", user.getUserName());
+            // model.addAttribute("user", user.getPassword());
+            return "index";
+        }else{
+            return "login";
+        }
+
     }
 
     @RequestMapping(value="/", method = RequestMethod.POST)

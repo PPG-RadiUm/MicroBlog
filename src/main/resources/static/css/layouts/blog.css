@@ -181,3 +181,13 @@ body {
         bottom: 0;
     }
 }
+
+.notConnected {
+    /*visibility: hidden;*/
+    display: none;
+}
+
+.connected {
+    /*visibility: visible;*/
+    display: block;
+}

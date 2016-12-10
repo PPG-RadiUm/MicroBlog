@@ -1,5 +1,15 @@
 var stompClient = null;
 
+var socket = new SockJS('/gs-guide-websocket');
+stompClient = Stomp.over(socket);
+stompClient.connect({}, function (frame) {
+    setConnected(true);
+    console.log('Connected: ' + frame);
+    stompClient.subscribe('/topic/greetings', function (greeting) {
+        showGreeting(JSON.parse(greeting.body).content);
+    });
+});
+
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
@@ -13,15 +23,10 @@ function setConnected(connected) {
 }
 
 function connect() {
-    var socket = new SockJS('/gs-guide-websocket');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        setConnected(true);
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
-            showGreeting(JSON.parse(greeting.body).content);
-        });
-    });
+    var username = $("#name").val();
+    var password = $("#password").val();
+
+    stompClient.send("/user/connect", {}, JSON.stringify({'name': username, 'password': password}));
 }
 
 function disconnect() {
@@ -41,10 +46,10 @@ function showGreeting(message) {
 }
 
 $(function () {
-    $("form").on('submit', function (e) {
+    /*$("form").on('submit', function (e) {
         e.preventDefault();
-    });
-    $( "#connect" ).click(function() { connect(); });
+    });*/
+    //$( "#connect" ).click(function() { connect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
 });

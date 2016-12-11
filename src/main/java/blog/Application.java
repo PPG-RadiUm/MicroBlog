@@ -13,6 +13,7 @@ import java.util.Calendar;
 public class Application {
 		public static MessageRepository messageRepository;
 		public static UserRepository userRepository;
+		public static Long userIdSession = null;
 		private static final Logger log = LoggerFactory.getLogger(Application.class);
 
 		// Make the application executable
@@ -44,11 +45,10 @@ public class Application {
 	      log.info("");
 
 				// fetch customers by last name
+				User user2 = userRepository.findByUserName("Henry Michel");
 	      log.info("User found with findByUserName('Henry Michel'):");
 				log.info("--------------------------------------------");
-				for (User hm : userRepository.findByUserName("Henry Michel")) {
-					log.info(hm.toString());
-				}
+				log.info(user2.toString());
 	      log.info("");
 
 				// fetch all messages

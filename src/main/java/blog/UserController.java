@@ -22,12 +22,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/", method=RequestMethod.GET)
-    public Iterable<User> getUserByUserName(@RequestParam(required=false) String userName) {
+    public User getUserByUserName(@RequestParam(required=true) String userName) {
         if(userName != null){
             return repository.findByUserName(userName);
-        }else{
-            return repository.findAll();
         }
+        return null;
     }
 
     @RequestMapping(value="/", method = RequestMethod.POST)

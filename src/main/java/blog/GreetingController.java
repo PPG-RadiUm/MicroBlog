@@ -6,34 +6,71 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Calendar;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GreetingController {
 
+    // On va sur la page index
     @GetMapping("/index")
     public String indexPage(Model model) {
         // On récupère les messages à afficher
         model.addAttribute("messageRepository", Application.messageRepository.findAll());
-        model.addAttribute("message", new MessageForm());
+        model.addAttribute("messageForm", new MessageForm());
+        model.addAttribute("userIdSession", Application.userIdSession);
 
         return "index";
     }
 
+    // Quand on a cliqué sur le bouton "Say it" pour envoyer un message Ou si un utilisateur a tenté de se connecter depuis la page login
     @PostMapping("/index")
-    public String indexPage(@ModelAttribute MessageForm messageForm, Model model) {
-        // On enregistre le message envoyé
-        Application.messageRepository.save(new Message(new Long(1), messageForm.getContent(), Calendar.getInstance()));
+    public String indexPage(@ModelAttribute MessageForm messageForm, @ModelAttribute LoginForm loginForm, Model model) {
+
+        if(messageForm.getContent() != null && messageForm.getContent() != ""){
+          // On enregistre le message envoyé
+          Application.messageRepository.save(new Message(new Long(1), messageForm.getContent(), Calendar.getInstance()));
+        }
+
+        if(loginForm.getUserName() != null && loginForm.getPassword() != null){
+          User user = Application.userRepository.findByUserName(loginForm.getUserName());
+
+          // Si on trouve un utilisateur avec le nom donné, on ne vérifie pas encore le mot de passe
+          if(user != null){
+            // On met en session l'id de l'utilisateur connecté
+            Application.userIdSession = new Long(user.getId());
+          } else {
+            return "redirect:login?loginFailed=true";
+          }
+        }
 
         // On récupère les messages à afficher
         model.addAttribute("messageRepository", Application.messageRepository.findAll());
-        model.addAttribute("message", new MessageForm()); 
+        model.addAttribute("messageForm", new MessageForm());
+        model.addAttribute("userIdSession", Application.userIdSession);
+        if(Application.userIdSession != null){
+          model.addAttribute("userUserName", Application.userRepository.findById(Application.userIdSession).getUserName());
+        }
 
         return "index";
     }
 
+    // On va sur la page login
     @GetMapping("/login")
-    public String loginPage(Model model) {
+    public String loginPage(@RequestParam(value="loginFailed",required=false) String loginFailed, Model model) {
+        if(loginFailed != null){
+          model.addAttribute("loginFailed", true);
+        }
+        model.addAttribute("loginForm", new LoginForm());
+
         return "login";
+    }
+
+    // On veut se deconnecter
+    @GetMapping("/logout")
+    public String logoutAction(Model model) {
+        Application.userIdSession = null;
+
+        return "redirect:login";
     }
 
     /*@MessageMapping("/blog")

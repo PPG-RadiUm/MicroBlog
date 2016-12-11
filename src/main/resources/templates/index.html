@@ -42,11 +42,24 @@
 					<nav class="nav">
 						<!--<form>-->
 							<ul class="nav-list">
-								<li class="nav-item buttonsIndex">
-				                    <!--<button id="connect" class="btn btn-default" type="submit">Connect</button>
-				                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect</button>-->
-									<a class="pure-button" href="/login">Login</a>
-								</li>
+
+								<!-- Si on est connecté -->
+								<div th:if="${userIdSession != null}">
+									<li class="nav-item buttonsIndex">
+										<a class="pure-button" href="/edit_profile">Edit my profile</a>
+									</li>
+										<li class="nav-item buttonsIndex">
+											<a class="pure-button" href="/logout">Logout</a>
+										</li>
+								</div>
+
+								<!-- Si on n'est pas connecté -->
+								<div th:unless="${userIdSession != null}">
+									<li class="nav-item buttonsIndex">
+										<a class="pure-button" href="/login">Login</a>
+									</li>
+								</div>
+
 							</ul>
 						<!--</form>-->
 					</nav>
@@ -54,14 +67,14 @@
 			</div>
 
 			<!-- THE RIGHT PART WITH MESSAGE CONTENT -->
-			<div class="content pure-u-1 pure-u-md-3-4">
+			<div th:if="${userIdSession != null}" class="content pure-u-1 pure-u-md-3-4">
 				<div>
 
-					<h1>Welcome User!</h1>
+					<h1>Welcome <span th:text="${userUserName != null} ? ${userUserName}"></span> !</h1>
 
 					<p>Say someting about you : </p>
 
-					<form action="#" th:action="@{/index}" th:object="${message}" method="post" class="pure-form pure-form-stacked">
+					<form action="#" th:action="@{/index}" th:object="${messageForm}" method="post" class="pure-form pure-form-stacked">
 						<textarea th:field="*{content}" class="form-control" rows="3"></textarea>
 						<button type="submit" class="pure-button pure-button-primary">Say it!</button>
 

@@ -7,44 +7,60 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import java.util.Calendar;
 
 @SpringBootApplication
 public class Application {
+		public static MessageRepository messageRepository;
+		public static UserRepository userRepository;
+		private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-	private static final Logger log = LoggerFactory.getLogger(Application.class);
-
+		// Make the application executable
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
+		// This code is executed in the terminal when the application starts
     @Bean
-	public CommandLineRunner demo(UserRepository repository) {
-		return (args) -> {
-			// save a couple of customers
-			repository.save(new User("Henry Michel", "RD", "Henry-Michel", "HenryMichel", "", ""));
+		public CommandLineRunner demo(UserRepository userRepository, MessageRepository messageRepository) {
+			return (args) -> {
+				// save a couple of customers
+				userRepository.save(new User("Henry Michel", "RD", "Henry-Michel", "HenryMichel", "", ""));
+				messageRepository.save(new Message(new Long(1), "Salut les rivieros !", Calendar.getInstance()));
 
-			// fetch all customers
-			log.info("Users found with findAll():");
-			log.info("-------------------------------");
-			for (User user : repository.findAll()) {
+				// fetch all customers
+				log.info("Users found with findAll():");
+				log.info("-------------------------------");
+				for (User user : userRepository.findAll()) {
+					log.info(user.toString());
+				}
+	      log.info("");
+
+				// fetch an individual customer by ID
+				User user = userRepository.findOne(1L);
+				log.info("User found with findOne(1L):");
+				log.info("--------------------------------");
 				log.info(user.toString());
-			}
-            log.info("");
+	      log.info("");
 
-			// fetch an individual customer by ID
-			User user = repository.findOne(1L);
-			log.info("User found with findOne(1L):");
-			log.info("--------------------------------");
-			log.info(user.toString());
-            log.info("");
+				// fetch customers by last name
+	      log.info("User found with findByUserName('Henry Michel'):");
+				log.info("--------------------------------------------");
+				for (User hm : userRepository.findByUserName("Henry Michel")) {
+					log.info(hm.toString());
+				}
+	      log.info("");
 
-			// fetch customers by last name
-            log.info("User found with findByUserName('Henry Michel'):");
-			log.info("--------------------------------------------");
-			for (User hm : repository.findByUserName("Henry Michel")) {
-				log.info(hm.toString());
-			}
-            log.info("");
-		};
-	}
+				// fetch all messages
+				log.info("Messages found with findAll():");
+				log.info("-------------------------------");
+				for (Message message : messageRepository.findAll()) {
+					log.info(message.toString());
+				}
+	      log.info("");
+
+				this.messageRepository = messageRepository;
+				this.userRepository = userRepository;
+			};
+		}
 }

@@ -94,7 +94,7 @@ public class GreetingController {
           }
         }
 
-        return "index";
+        return "redirect:login";
     }
 
     // On va sur la page signup
@@ -145,6 +145,7 @@ public class GreetingController {
           return "redirect:index";
         }
 
+        // Valeur toujours null, impossible d'éditer le profil
         System.out.println(newUser.getUserName());
         System.out.println(newUser.getPassword());
         System.out.println(newUser.getFacebookId());

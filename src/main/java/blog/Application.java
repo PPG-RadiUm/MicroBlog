@@ -27,9 +27,12 @@ public class Application {
 			return (args) -> {
 				// save a couple of customers
 				userRepository.save(new User("Henry Michel", "RD", "Henry-Michel", "HenryMichel", "", "henry.jpg"));
+				userRepository.save(new User("Patrick Patrick", "DR", "Patrick-Patrick", "PatrickPatrick", "", "patrick.jpg"));
 				Calendar cal = Calendar.getInstance();
 				cal.setTimeInMillis(1481326371);
 				messageRepository.save(new Message(new Long(1), "Salut les rivieros !", cal));
+				cal.setTimeInMillis(1489999999);
+				messageRepository.save(new Message(new Long(2), "Bienvenue dans la LambdaCave !", cal));
 
 				// fetch all customers
 				log.info("Users found with findAll():");

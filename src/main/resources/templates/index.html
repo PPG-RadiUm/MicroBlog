@@ -104,8 +104,8 @@
 
 						<!-- A single blog post (make as many <section class="post"> that we want to display as last tweets) -->
 						<section class="post" th:each="currentMessage, stat : ${messageRepository}">
-							<!--<img class="post-avatar" alt="avatar" height="48" width="48" th:attr="src=@{/images(name=${currentMessage.getAvatar()})}"/>-->
-							<img class="post-avatar" alt="avatar" height="48" width="48" src="./img/common/henry.jpg"/>
+							<img class="post-avatar" alt="avatar" height="48" width="48" th:attr="src=@{|./img/common/${currentMessage.getAvatar()}|}"/>
+							<!--<img class="post-avatar" alt="avatar" height="48" width="48" src="./img/common/henry.jpg"/>-->
 
 							<div class="post-description">
 								<p th:text="${currentMessage.getContent()}">

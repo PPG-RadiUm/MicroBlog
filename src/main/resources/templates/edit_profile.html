@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content="A layout example that shows off a blog page with a list of posts."/>
+
+		<title>Social Network - Riviera Detente</title>
+
+		<link rel="stylesheet" href="https://yui-s.yahooapis.com/pure/0.6.0/pure-min.css"/>
+
+		<link rel="stylesheet" href="css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="css/bootstrap-social.css"/>
+		<link rel="stylesheet" href="css/font-awesome.min.css"/>
+
+		<!--[if lte IE 8]>
+		<link rel="stylesheet" href="https://yui-s.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
+		<![endif]-->
+		<!--[if gt IE 8]><!-->
+		<link rel="stylesheet" href="https://yui-s.yahooapis.com/pure/0.6.0/grids-responsive-min.css"/>
+		<!--<![endif]-->
+
+		<!--[if lte IE 8]>
+		<link rel="stylesheet" href="css/layouts/blog-old-ie.css">
+		<![endif]-->
+		<!--[if gt IE 8]><!-->
+		<link rel="stylesheet" href="./css/layouts/blog.css"/>
+		<!--<![endif]-->
+	</head>
+
+	<body>
+		<div id="layout" class="pure-g">
+
+			<!-- THE LEFT SIDEBAR WITH TITLE AND LOGIN BUTTON -->
+			<div class="sidebar pure-u-1 pure-u-md-1-4">
+				<div class="header">
+					<h1 class="brand-title">
+						<a href="/index">Riviera Detente Network</a>
+					</h1>
+					<h2 class="brand-tagline">A really funny software</h2>
+
+					<nav class="nav">
+						<ul class="nav-list">
+							<li class="nav-item buttonsIndex">
+								<a class="pure-button" href="/edit_profile">Edit my profile</a>
+							</li>
+							<li class="nav-item buttonsIndex">
+								<a class="pure-button" href="/logout">Logout</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+
+			<!-- THE RIGHT PART WITH MESSAGE CONTENT -->
+			<div class="content pure-u-1 pure-u-md-3-4">
+
+					<div th:object="${user}">
+	            <h1 class="content-subhead">Profile</h1>
+	            <h1 th:text="${user.getUserName()}">Yoda</h1>
+	            <div style="float:left">
+	                <img class="avatar" height="128" width="128" src="./img/common/henry.jpg"/><br/>
+	                <button type="submit" class="pure-button pure-button-primary" style="margin-top:5px;">Upload new picture</button>
+	            </div>
+
+	            <form action="#" th:action="@{/edit_profile}" th:object="${newUser}" method="post" class="pure-form pure-form-aligned">
+	                <fieldset>
+	                    <div class="pure-control-group">
+	                        <label>Username</label>
+	                        <span th:text="${user.getUserName()}"></span>
+	                    </div>
+
+	                    <div class="pure-control-group">
+	                        <label for="email">Email</label>
+	                        <input id="email" placeholder="Email" th:value="${user.getEmail()}" type="email"/>
+	                    </div>
+
+	                    <div class="pure-control-group">
+	                        <label for="facebook">
+	                            <a class="btn btn-social-icon btn-s btn-facebook">
+	                                <span class="fa fa-facebook"></span>
+	                            </a>
+	                        </label>
+	                        <input id="facebook" placeholder="Facebook id" th:value="${user.getFacebookId()}" type="text"/>
+	                    </div>
+
+	                    <div class="pure-control-group">
+	                        <label for="tweeter">
+	                            <a class="btn btn-social-icon btn-s btn-twitter">
+	                                <span class="fa fa-twitter"></span>
+	                            </a>
+	                        </label>
+	                        <input id="tweeter" placeholder="Tweeter id" th:value="${user.getTwitterId()}" type="text"/>
+	                    </div>
+
+	                    <div class="pure-control-group">
+	                        <label for="linkedin">
+	                            <a class="btn btn-social-icon btn-s btn-linkedin">
+	                                <span class="fa fa-linkedin"></span>
+	                            </a>
+	                        </label>
+	                        <input id="linkedin" placeholder="LinkedIn id" th:value="${user.getLinkedInId()}" type="text"/>
+	                    </div>
+
+	                    <div class="pure-controls">
+	                        <button type="submit" class="pure-button pure-button-primary">Save</button>
+	                    </div>
+	                </fieldset>
+	            </form>
+
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

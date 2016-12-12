@@ -181,3 +181,9 @@ body {
         bottom: 0;
     }
 }
+
+.avatar {
+    border-radius: 64px;
+    float: left;
+    margin-right: 1em;
+}

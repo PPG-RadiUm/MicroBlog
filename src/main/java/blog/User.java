@@ -12,6 +12,7 @@ public class User {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     private String userName;
+    private String email;
     private String password;
     private String facebookId;
     private String twitterId;
@@ -22,6 +23,7 @@ public class User {
 
     public User(String userName, String password, String facebookId, String twitterId, String linkedInId, String picture) {
         this.userName = userName;
+        this.email = "example@example.com";
         this.password = password;
         this.facebookId = facebookId;
         this.twitterId = twitterId;
@@ -42,6 +44,10 @@ public class User {
 
     public String getUserName(){
         return userName;
+    }
+
+    public String getEmail(){
+        return email;
     }
 
     public String getPassword(){

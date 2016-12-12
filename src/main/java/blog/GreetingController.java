@@ -15,7 +15,7 @@ public class GreetingController {
     @GetMapping("/index")
     public String indexPage(Model model) {
         // On récupère les messages à afficher
-        model.addAttribute("messageRepository", Application.messageRepository.findAll());
+        model.addAttribute("messageRepository", Application.messageRepository.findAllByOrderByIdDesc());
         model.addAttribute("messageForm", new MessageForm());
         model.addAttribute("userIdSession", Application.userIdSession);
 
@@ -28,13 +28,13 @@ public class GreetingController {
 
         if(messageForm.getContent() != null && messageForm.getContent() != ""){
           // On enregistre le message envoyé
-          Application.messageRepository.save(new Message(new Long(1), messageForm.getContent(), Calendar.getInstance()));
+          Application.messageRepository.save(new Message(Application.userIdSession, messageForm.getContent(), Calendar.getInstance()));
         }
 
         if(loginForm.getUserName() != null && loginForm.getPassword() != null){
-          User user = Application.userRepository.findByUserName(loginForm.getUserName());
+          User user = Application.userRepository.findByUserNameAndPassword(loginForm.getUserName(), loginForm.getPassword());
 
-          // Si on trouve un utilisateur avec le nom donné, on ne vérifie pas encore le mot de passe
+          // Si on trouve un utilisateur avec le nom donné et le mot de passe donné
           if(user != null){
             // On met en session l'id de l'utilisateur connecté
             Application.userIdSession = new Long(user.getId());
@@ -44,7 +44,7 @@ public class GreetingController {
         }
 
         // On récupère les messages à afficher
-        model.addAttribute("messageRepository", Application.messageRepository.findAll());
+        model.addAttribute("messageRepository", Application.messageRepository.findAllByOrderByIdDesc());
         model.addAttribute("messageForm", new MessageForm());
         model.addAttribute("userIdSession", Application.userIdSession);
         if(Application.userIdSession != null){

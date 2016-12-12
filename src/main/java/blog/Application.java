@@ -27,7 +27,9 @@ public class Application {
 			return (args) -> {
 				// save a couple of customers
 				userRepository.save(new User("Henry Michel", "RD", "Henry-Michel", "HenryMichel", "", ""));
-				messageRepository.save(new Message(new Long(1), "Salut les rivieros !", Calendar.getInstance()));
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(1481326371);
+				messageRepository.save(new Message(new Long(1), "Salut les rivieros !", cal));
 
 				// fetch all customers
 				log.info("Users found with findAll():");

@@ -8,6 +8,7 @@ import java.util.Calendar;
 public interface MessageRepository extends CrudRepository<Message, Long> {
 
     Message findById(Long id);
+    List<Message> findAllByOrderByIdDesc();
     List<Message> findByFkUserId(Long fkUserId);
     List<Message> findByContent(String content);
     List<Message> findByCalendar(Calendar calendar);

@@ -32,8 +32,8 @@ public class User {
     @Override
     public String toString() {
         return String.format(
-                "User[id=%d, userName='%s', facebookId='%s', twitterId='%s', linkedInId='%s']",
-                id, userName, facebookId, twitterId, linkedInId);
+                "User[id=%d, userName='%s', password='%s', facebookId='%s', twitterId='%s', linkedInId='%s']",
+                id, userName, password, facebookId, twitterId, linkedInId);
     }
 
     public Long getId(){

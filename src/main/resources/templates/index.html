@@ -109,7 +109,10 @@
 							</div>
 
 							<p class="post-meta">
-								1 day ago - By <a href="#" class="post-author" th:text="${currentMessage.getUserName()}"></a> under <a class="post-category post-category-js" href="#">#Welcome</a>
+								<span th:text="${currentMessage.getPostedTime() != null} ? ${currentMessage.getPostedTime()}"></span>
+								- By <a href="#" class="post-author" th:text="${currentMessage.getUserName()}"></a>
+								<span th:if="${currentMessage.gotHashtags()}">under</span>
+								<a class="post-category post-category-js" href="#" th:each="currentHashtag, stat : ${currentMessage.getHashtags()}">#<span th:text="${currentHashtag}"></span></a>
 							</p>
 						</section>
 						<!-- End of a blog post -->

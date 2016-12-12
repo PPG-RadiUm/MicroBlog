@@ -27,6 +27,7 @@ public class Application {
 			return (args) -> {
 				// save a couple of customers
 				userRepository.save(new User("Henry Michel", "RD", "Henry-Michel", "HenryMichel", "", ""));
+				userRepository.save(new User("Patrick Patrick", "AF", "Patrick-Patrick", "PatrickPatrick", "", ""));
 				messageRepository.save(new Message(new Long(1), "Salut les rivieros !", Calendar.getInstance()));
 
 				// fetch all customers

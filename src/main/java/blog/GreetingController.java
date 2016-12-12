@@ -47,6 +47,8 @@ public class GreetingController {
         model.addAttribute("messageRepository", Application.messageRepository.findAll());
         model.addAttribute("messageForm", new MessageForm());
         model.addAttribute("userIdSession", Application.userIdSession);
+
+        // Si on est connecté, on ajouté un attribut qui correspond au nom d'utilisateur
         if(Application.userIdSession != null){
           model.addAttribute("userUserName", Application.userRepository.findById(Application.userIdSession).getUserName());
         }
@@ -57,6 +59,13 @@ public class GreetingController {
     // On va sur la page login
     @GetMapping("/login")
     public String loginPage(@RequestParam(value="loginFailed",required=false) String loginFailed, Model model) {
+        // Si l'utilisateur est déjà connecté
+        if(Application.userIdSession != null){
+          // On le redirige vers la page index
+          return "redirect:index";
+        }
+
+        // Si la connexion a échoué : erreur à propos du nom d'utilisateur ou mot de passe
         if(loginFailed != null){
           model.addAttribute("loginFailed", true);
         }
@@ -71,6 +80,45 @@ public class GreetingController {
         Application.userIdSession = null;
 
         return "redirect:login";
+    }
+
+    // On veut editer son profil
+    @GetMapping("/edit_profile")
+    public String editProfilePage(Model model) {
+        if(Application.userIdSession == null){
+          // On le redirige vers la page index
+          return "redirect:index";
+        }
+
+        model.addAttribute("user", Application.userRepository.findById(Application.userIdSession));
+        model.addAttribute("newUser", new User());
+
+        return "edit_profile";
+    }
+
+    // On veut editer son profil
+    @PostMapping("/edit_profile")
+    public String editProfilePage(@ModelAttribute User newUser, Model model) {
+        if(Application.userIdSession == null){
+          // On le redirige vers la page index
+          return "redirect:index";
+        }
+
+        System.out.println(newUser.getUserName());
+        System.out.println(newUser.getPassword());
+        System.out.println(newUser.getFacebookId());
+        System.out.println(newUser.getTwitterId());
+
+        // L'utilisateur a appuyé sur le bouton "Save" pour modifier son profil
+        if(newUser != null && newUser.getUserName() != null && newUser.getUserName() != ""){
+            User cTemp = Application.userRepository.findById(Application.userIdSession);
+            //Application.userRepository.save(cTemp.updateUser(newUser.getUserName(), newUser.getPassword(), newUser.getFacebookId(), newUser.getTwitterId(), newUser.getLinkedInId(), newUser.getPicture()));
+        }
+
+        model.addAttribute("user", Application.userRepository.findById(Application.userIdSession));
+        model.addAttribute("newUser", new User());
+
+        return "edit_profile";
     }
 
     /*@MessageMapping("/blog")

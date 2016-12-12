@@ -5,8 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import java.util.Calendar;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Calendar;
 
 @Controller
 public class GreetingController {
@@ -24,6 +25,7 @@ public class GreetingController {
 
     // Quand on a cliqué sur le bouton "Say it" pour envoyer un message Ou si un utilisateur a tenté de se connecter depuis la page login
     @PostMapping("/index")
+    @SendTo("/topic/greetings")
     public String indexPage(@ModelAttribute MessageForm messageForm, @ModelAttribute LoginForm loginForm, Model model) {
 
         if(messageForm.getContent() != null && messageForm.getContent() != ""){

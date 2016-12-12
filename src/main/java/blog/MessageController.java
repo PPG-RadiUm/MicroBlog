@@ -27,7 +27,7 @@ public class MessageController {
         if(content != null){
             return repository.findByContent(content);
         }else{
-            return repository.findAll();
+            return repository.findAllByOrderByIdDesc();
         }
     }
 

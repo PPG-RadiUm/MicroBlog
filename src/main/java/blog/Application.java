@@ -29,7 +29,7 @@ public class Application {
 				userRepository.save(new User("Henry Michel", "RD", "Henry-Michel", "HenryMichel", "", ""));
 				Calendar cal = Calendar.getInstance();
 				cal.setTimeInMillis(1481326371);
-				messageRepository.save(new Message(Long(1), "Salut les rivieros !", cal));
+				messageRepository.save(new Message(new Long(1), "Salut les rivieros !", cal));
 
 				// fetch all customers
 				log.info("Users found with findAll():");

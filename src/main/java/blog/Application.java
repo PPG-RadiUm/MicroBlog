@@ -26,7 +26,7 @@ public class Application {
 		public CommandLineRunner demo(UserRepository userRepository, MessageRepository messageRepository) {
 			return (args) -> {
 				// save a couple of customers
-				userRepository.save(new User("Henry Michel", "RD", "Henry-Michel", "HenryMichel", "", ""));
+				userRepository.save(new User("Henry Michel", "RD", "Henry-Michel", "HenryMichel", "", "henry.jpg"));
 				Calendar cal = Calendar.getInstance();
 				cal.setTimeInMillis(1481326371);
 				messageRepository.save(new Message(new Long(1), "Salut les rivieros !", cal));

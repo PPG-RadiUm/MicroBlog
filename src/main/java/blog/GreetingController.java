@@ -74,6 +74,47 @@ public class GreetingController {
         return "login";
     }
 
+    // On va sur la page signup
+    @PostMapping("/signup")
+    public String signupPage(@RequestParam(value="usernameError",required=false) String usernameError, @ModelAttribute User user, Model model) {
+        // Si l'utilisateur est déjà connecté
+        if(Application.userIdSession != null){
+          // On le redirige vers la page index
+          return "redirect:index";
+        }
+
+        if(user.getUserName() != null && user.getPassword() != null){
+          // Si on trouve un utilisateur avec le nom donné et le mot de passe donné
+          if(Application.userRepository.findByUserName(user.getUserName()) == null){
+            // On met en session l'id de l'utilisateur connecté
+            Application.userRepository.save(new User(user.getUserName(), user.getPassword(), user.getEmail(),
+                  user.getFacebookId(), user.getTwitterId(), user.getLinkedInId(), "tilo-avatar.png"));
+          } else {
+            return "redirect:signup?usernameError=true";
+          }
+        }
+
+        return "index";
+    }
+
+    // On va sur la page signup
+    @GetMapping("/signup")
+    public String signupPage(@RequestParam(value="usernameError",required=false) String usernameError, Model model) {
+        // Si l'utilisateur est déjà connecté
+        if(Application.userIdSession != null){
+          // On le redirige vers la page index
+          return "redirect:index";
+        }
+
+        // Si le nom d'utilisateur est déjà pris
+        if(usernameError != null){
+          model.addAttribute("usernameError", true);
+        }
+        model.addAttribute("user", new User());
+
+        return "signup";
+    }
+
     // On veut se deconnecter
     @GetMapping("/logout")
     public String logoutAction(Model model) {

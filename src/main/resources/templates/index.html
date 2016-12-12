@@ -48,13 +48,16 @@
 									<li class="nav-item buttonsIndex">
 										<a class="pure-button" href="/edit_profile">Edit my profile</a>
 									</li>
-										<li class="nav-item buttonsIndex">
-											<a class="pure-button" href="/logout">Logout</a>
-										</li>
+									<li class="nav-item buttonsIndex">
+										<a class="pure-button" href="/logout">Logout</a>
+									</li>
 								</div>
 
 								<!-- Si on n'est pas connecté -->
 								<div th:unless="${userIdSession != null}">
+									<li class="nav-item buttonsIndex">
+										<a class="pure-button" href="/signup">Sign up</a>
+									</li>
 									<li class="nav-item buttonsIndex">
 										<a class="pure-button" href="/login">Login</a>
 									</li>
@@ -101,7 +104,8 @@
 
 						<!-- A single blog post (make as many <section class="post"> that we want to display as last tweets) -->
 						<section class="post" th:each="currentMessage, stat : ${messageRepository}">
-							<img class="post-avatar" alt="Tilo Mitra&#x27;s avatar" height="48" width="48" src="./img/common/henry.jpg"/>
+							<!--<img class="post-avatar" alt="avatar" height="48" width="48" th:attr="src=@{/images(name=${currentMessage.getAvatar()})}"/>-->
+							<img class="post-avatar" alt="avatar" height="48" width="48" src="./img/common/henry.jpg"/>
 
 							<div class="post-description">
 								<p th:text="${currentMessage.getContent()}">

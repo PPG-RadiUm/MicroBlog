@@ -52,6 +52,10 @@ public class Message {
         return Application.userRepository.findById(this.fkUserId).getUserName();
     }
 
+    public String getAvatar() {
+        return Application.userRepository.findById(this.fkUserId).getPicture();
+    }
+
     public String getContent() {
         return content;
     }
